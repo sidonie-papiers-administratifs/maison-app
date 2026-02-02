@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maison · Bibliothèque & Cuisine</title>
+
+  <meta name="theme-color" content="#0b0d12" />
+  <link rel="manifest" href="manifest.json" />
+
+  <style>
+    :root{
+      --bg:#0b0d12;
+      --bg2:#0f1320;
+      --card:#141a2a;
+      --card2:#101629;
+      --txt:#eef2ff;
+      --muted:#9aa3b2;
+      --line:rgba(255,255,255,.10);
+      --shadow:0 20px 60px rgba(0,0,0,.55);
+      --radius:18px;
+
+      --accent:#7c3aed;
+      --accent2:#22c55e;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1100px 650px at 15% -10%, rgba(124,58,237,.25), transparent),
+        radial-gradient(950px 520px at 88% 15%, rgba(34,197,94,.14), transparent),
+        radial-gradient(750px 450px at 25% 90%, rgba(245,158,11,.10), transparent),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      color:var(--txt);
+    }
+
+    a{color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:16px}
+    header{
+      position:sticky;top:0;z-index:20;
+      backdrop-filter: blur(12px);
+      background: rgba(11,13,18,.78);
+      border-bottom:1px solid var(--line);
+    }
+    .top{
+      display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap
+    }
+    h1{margin:0;font-size:22px;letter-spacing:1px}
+    .sub{margin-top:4px;color:var(--muted);font-size:13px;line-height:1.35}
+    .pillbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 14px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--txt);
+      cursor:pointer;
+      font-size:14px;
+      user-select:none;
+      transition:.18s;
+    }
+    .pill[aria-selected="true"]{
+      background: rgba(124,58,237,.22);
+      border-color: rgba(124,58,237,.55);
+    }
+    .right-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 12px;border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--txt);
+      cursor:pointer;
+      font-size:13px;
+      transition:.18s;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn.primary{
+      background: rgba(124,58,237,.22);
+      border-color: rgba(124,58,237,.55);
+    }
+    .btn.ok{
+      background: rgba(34,197,94,.16);
+      border-color: rgba(34,197,94,.45);
+    }
+    .btn.warn{
+      background: rgba(245,158,11,.16);
+      border-color: rgba(245,158,11,.45);
+    }
+    .btn.danger{
+      background: rgba(239,68,68,.16);
+      border-color: rgba(239,68,68,.45);
+    }
+
+    main{padding:22px 16px 44px}
+    .grid{display:grid;grid-template-columns:1fr;gap:18px}
+    @media(min-width:980px){ .grid{grid-template-columns:1.1fr .9fr} }
+
+    .card{
+      background: linear-gradient(180deg, rgba(20,26,42,.95), rgba(16,22,41,.92));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card h2{
+      margin:0;padding:16px 16px 14px;
+      border-bottom:1px solid var(--line);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      font-size:16px;
+    }
+    .card .content{padding:16px}
+    .muted{color:var(--muted)}
+    .small{font-size:12px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .field{
+      display:flex;flex-direction:column;gap:6px;min-width:180px;flex:1;
+    }
+    label{font-size:12px;color:var(--muted)}
+    input, select, textarea{
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      color: var(--txt);
+      border-radius: 12px;
+      padding:10px 10px;
+      font-size:14px;
+      outline:none;
+    }
+    input::placeholder, textarea::placeholder{color:rgba(154,163,178,.75)}
+    textarea{min-height:84px;resize:vertical}
+
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding:12px;
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .item-head{
+      display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap
+    }
+    .title{font-weight:650}
+    .meta{color:var(--muted);font-size:12px;line-height:1.35}
+    .chips{display:flex;gap:6px;flex-wrap:wrap}
+    .chip{
+      padding:5px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      font-size:12px;color:var(--txt);
+    }
+    .chip.ok{border-color: rgba(34,197,94,.5); background: rgba(34,197,94,.12)}
+    .chip.warn{border-color: rgba(245,158,11,.55); background: rgba(245,158,11,.14)}
+    .chip.danger{border-color: rgba(239,68,68,.55); background: rgba(239,68,68,.14)}
+    .item-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+    .split{display:grid;grid-template-columns:1fr;gap:14px}
+    @media(min-width:980px){ .split{grid-template-columns:1fr} }
+
+    .panel[hidden]{display:none !important}
+
+    .divider{height:1px;background:var(--line);margin:12px 0}
+    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+
+    .recipe{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding:12px;
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .recipe strong{font-weight:750}
+    .recipe .score{font-size:12px;color:var(--muted)}
+    .recipe ul{margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.4}
+    .recipe .r-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .toast{
+      position:fixed;left:16px;right:16px;bottom:16px;
+      padding:12px 14px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(20,26,42,.92);
+      box-shadow: var(--shadow);
+      color:var(--txt);
+      z-index:50;
+      display:none;
+    }
+    .toast.show{display:block}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>Maison</h1>
+        <div class="sub">Bibliothèque · Cuisine · Recettes halal maghrébines et méditerranéennes</div>
+      </div>
+      <div class="right-actions">
+        <button class="btn ok" id="btn-notifs">Activer les notifications</button>
+        <button class="btn warn" id="btn-export">Exporter</button>
+        <button class="btn" id="btn-import">Importer</button>
+        <button class="btn danger" id="btn-reset">Réinitialiser</button>
+      </div>
+    </div>
+
+    <div class="pillbar" role="tablist" aria-label="Navigation">
+      <button class="pill" type="button" data-tab="biblio" role="tab" aria-selected="true">📚 Bibliothèque</button>
+      <button class="pill" type="button" data-tab="cuisine" role="tab" aria-selected="false">🍽️ Cuisine</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- PANNEAU BIBLIO -->
+  <section class="panel" data-panel="biblio">
+    <div class="grid">
+      <section class="card">
+        <h2>
+          <span>📚 Livres empruntés</span>
+          <span class="chip" id="biblio-count">0 livre</span>
+        </h2>
+        <div class="content">
+          <div class="row">
+            <div class="field">
+              <label for="bk-title">Titre</label>
+              <input id="bk-title" placeholder="Ex : Riyad as-Salihin, roman, etc." autocomplete="off" />
+            </div>
+            <div class="field">
+              <label for="bk-author">Auteur (optionnel)</label>
+              <input id="bk-author" placeholder="Ex : an-Nawawi" autocomplete="off" />
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:10px">
+            <div class="field">
+              <label for="bk-due">Date de retour</label>
+              <input id="bk-due" type="date" />
+            </div>
+            <div class="field">
+              <label for="bk-renew-max">Renouvellements maximum</label>
+              <input id="bk-renew-max" type="number" min="0" step="1" value="2" />
+            </div>
+            <div class="field">
+              <label for="bk-renew-days">Jours ajoutés par renouvellement</label>
+              <input id="bk-renew-days" type="number" min="0" step="1" value="21" />
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:12px">
+            <button class="btn primary" id="bk-add">Ajouter le livre</button>
+            <button class="btn" id="bk-check">Vérifier les rappels</button>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="list" id="biblio-list"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>
+          <span>⏰ Rappels (J-3 et J-1)</span>
+          <span class="chip" id="reminder-count">0</span>
+        </h2>
+        <div class="content">
+          <div class="muted" style="margin-bottom:10px">
+            Les rappels sont calculés automatiquement :
+            <span class="kbd">J-3</span>, <span class="kbd">J-1</span>, et <span class="kbd">Aujourd’hui</span>.
+            <br>
+            Les notifications système apparaissent seulement quand l’application est ouverte (si autorisées).
+          </div>
+          <div class="list" id="reminder-list"></div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- PANNEAU CUISINE -->
+  <section class="panel" data-panel="cuisine" hidden>
+    <div class="grid">
+      <section class="card">
+        <h2>
+          <span>🥗 Aliments en cuisine</span>
+          <span class="chip" id="pantry-count">0 aliment</span>
+        </h2>
+        <div class="content">
+          <div class="row">
+            <div class="field">
+              <label for="fd-name">Aliment</label>
+              <input id="fd-name" placeholder="Ex : tomates, oignons, pois chiches..." autocomplete="off" />
+            </div>
+            <div class="field">
+              <label for="fd-cat">Catégorie</label>
+              <select id="fd-cat">
+                <option value="légumes">Légumes</option>
+                <option value="fruits">Fruits</option>
+                <option value="protéines">Protéines</option>
+                <option value="féculents">Féculents</option>
+                <option value="épicerie">Épicerie</option>
+                <option value="épices">Épices</option>
+                <option value="produits laitiers">Produits laitiers</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="fd-qty">Quantité (optionnel)</label>
+              <input id="fd-qty" placeholder="Ex : 2, 500 g, 1 boîte..." autocomplete="off" />
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:12px">
+            <button class="btn primary" id="fd-add">Ajouter</button>
+            <button class="btn" id="fd-clear-search">Tout afficher</button>
+          </div>
+
+          <div class="row" style="margin-top:12px">
+            <div class="field" style="min-width:260px;flex:2">
+              <label for="fd-search">Rechercher</label>
+              <input id="fd-search" placeholder="Tape un mot : tomate, semoule, thon..." autocomplete="off" />
+            </div>
+            <div class="field">
+              <label for="fd-filter">Filtre catégorie</label>
+              <select id="fd-filter">
+                <option value="">Toutes</option>
+                <option value="légumes">Légumes</option>
+                <option value="fruits">Fruits</option>
+                <option value="protéines">Protéines</option>
+                <option value="féculents">Féculents</option>
+                <option value="épicerie">Épicerie</option>
+                <option value="épices">Épices</option>
+                <option value="produits laitiers">Produits laitiers</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="list" id="pantry-list"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>
+          <span>🍲 Recettes suggérées</span>
+          <span class="chip" id="recipe-count">0</span>
+        </h2>
+        <div class="content">
+          <div class="muted" style="margin-bottom:10px">
+            Recettes halal, maghrébines ou méditerranéennes (sans alcool, sans porc). Les suggestions se basent sur ce que tu as noté.
+          </div>
+          <div class="row" style="margin-bottom:12px">
+            <button class="btn ok" id="btn-suggest">Proposer des recettes</button>
+            <button class="btn" id="btn-recipes-all">Voir toutes</button>
+          </div>
+          <div class="list" id="recipe-list"></div>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================
+   Stockage
+========================= */
+const STORAGE_KEY = "maison_app_v1";
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return { books: [], pantry: [] };
+    const parsed = JSON.parse(raw);
+    if(!parsed || typeof parsed !== "object") return { books: [], pantry: [] };
+    return {
+      books: Array.isArray(parsed.books) ? parsed.books : [],
+      pantry: Array.isArray(parsed.pantry) ? parsed.pantry : []
+    };
+  }catch{
+    return { books: [], pantry: [] };
+  }
+}
+
+function saveState(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function uid(){
+  return Math.random().toString(16).slice(2) + "-" + Date.now().toString(16);
+}
+
+function toast(msg){
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  setTimeout(()=> el.classList.remove("show"), 2400);
+}
+
+let state = loadState();
+
+/* =========================
+   Onglets (INRATABLE)
+========================= */
+(function tabsInit(){
+  const tabs = Array.from(document.querySelectorAll('.pill[data-tab]'));
+  const panels = new Map(
+    Array.from(document.querySelectorAll('[data-panel]'))
+      .map(p => [p.getAttribute('data-panel'), p])
+  );
+
+  function setActive(key){
+    tabs.forEach(t=>{
+      const active = t.getAttribute("data-tab") === key;
+      t.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    panels.forEach((panel, panelKey)=>{
+      if(panelKey === key) panel.removeAttribute("hidden");
+      else panel.setAttribute("hidden","");
+    });
+  }
+
+  tabs.forEach(t=>{
+    t.addEventListener("click", ()=> setActive(t.getAttribute("data-tab")));
+  });
+
+  setActive("biblio");
+})();
+
+/* =========================
+   Outils date / rappels
+========================= */
+function startOfDay(d){
+  const x = new Date(d);
+  x.setHours(0,0,0,0);
+  return x;
+}
+function daysBetween(a,b){
+  const ms = startOfDay(b) - startOfDay(a);
+  return Math.round(ms / 86400000);
+}
+function fmtDateISO(d){
+  const x = new Date(d);
+  const y = x.getFullYear();
+  const m = String(x.getMonth()+1).padStart(2,"0");
+  const da = String(x.getDate()).padStart(2,"0");
+  return `${y}-${m}-${da}`;
+}
+function dueLabel(dueISO){
+  if(!dueISO) return {txt:"Date manquante", cls:"warn"};
+  const today = new Date();
+  const due = new Date(dueISO+"T00:00:00");
+  const diff = daysBetween(today, due);
+
+  if(diff < 0) return {txt:`En retard (${Math.abs(diff)} j)`, cls:"danger"};
+  if(diff === 0) return {txt:"Aujourd’hui", cls:"danger"};
+  if(diff === 1) return {txt:"J-1", cls:"warn"};
+  if(diff === 3) return {txt:"J-3", cls:"warn"};
+  return {txt:`Dans ${diff} j`, cls:"ok"};
+}
+
+function computeReminders(){
+  const today = new Date();
+  const out = [];
+  for(const b of state.books){
+    if(!b.dueISO) continue;
+    const due = new Date(b.dueISO+"T00:00:00");
+    const diff = daysBetween(today, due);
+    if(diff === 0 || diff === 1 || diff === 3 || diff < 0){
+      out.push({
+        bookId: b.id,
+        title: b.title,
+        dueISO: b.dueISO,
+        diff
+      });
+    }
+  }
+  out.sort((x,y)=> x.diff - y.diff);
+  return out;
+}
+
+/* =========================
+   Bibliothèque
+========================= */
+const elBiblioCount = document.getElementById("biblio-count");
+const elBiblioList = document.getElementById("biblio-list");
+const elReminderList = document.getElementById("reminder-list");
+const elReminderCount = document.getElementById("reminder-count");
+
+function renderBiblio(){
+  const n = state.books.length;
+  elBiblioCount.textContent = n === 0 ? "0 livre" : (n === 1 ? "1 livre" : `${n} livres`);
+  elBiblioList.innerHTML = "";
+
+  if(n === 0){
+    const empty = document.createElement("div");
+    empty.className = "muted";
+    empty.textContent = "Aucun livre pour l’instant.";
+    elBiblioList.appendChild(empty);
+    return;
+  }
+
+  const today = new Date();
+
+  for(const b of state.books){
+    const wrap = document.createElement("div");
+    wrap.className = "item";
+
+    const head = document.createElement("div");
+    head.className = "item-head";
+
+    const left = document.createElement("div");
+    const title = document.createElement("div");
+    title.className = "title";
+    title.textContent = b.title || "(Sans titre)";
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    const author = b.author ? `Auteur : ${b.author} · ` : "";
+    const renew = `Renouvellements : ${b.renewUsed}/${b.renewMax}`;
+    meta.textContent = `${author}${renew}`;
+    left.appendChild(title);
+    left.appendChild(meta);
+
+    const right = document.createElement("div");
+    right.className = "chips";
+    const lbl = dueLabel(b.dueISO);
+    const chip1 = document.createElement("span");
+    chip1.className = `chip ${lbl.cls}`;
+    chip1.textContent = lbl.txt;
+
+    const chip2 = document.createElement("span");
+    chip2.className = "chip";
+    chip2.textContent = b.dueISO ? `Retour : ${b.dueISO}` : "Retour : (non défini)";
+
+    right.appendChild(chip1);
+    right.appendChild(chip2);
+
+    head.appendChild(left);
+    head.appendChild(right);
+
+    const actions = document.createElement("div");
+    actions.className = "item-actions";
+
+    const btnRenew = document.createElement("button");
+    btnRenew.className = "btn ok";
+    btnRenew.type = "button";
+    btnRenew.textContent = "Renouveler";
+    btnRenew.disabled = (b.renewUsed >= b.renewMax) || !b.dueISO;
+    btnRenew.addEventListener("click", ()=>{
+      renewBook(b.id);
+    });
+
+    const btnEdit = document.createElement("button");
+    btnEdit.className = "btn";
+    btnEdit.type = "button";
+    btnEdit.textContent = "Modifier";
+    btnEdit.addEventListener("click", ()=>{
+      editBookPrompt(b.id);
+    });
+
+    const btnDel = document.createElement("button");
+    btnDel.className = "btn danger";
+    btnDel.type = "button";
+    btnDel.textContent = "Supprimer";
+    btnDel.addEventListener("click", ()=>{
+      if(confirm("Supprimer ce livre ?")){
+        state.books = state.books.filter(x=>x.id!==b.id);
+        saveState();
+        renderAll();
+        toast("Livre supprimé.");
+      }
+    });
+
+    actions.appendChild(btnRenew);
+    actions.appendChild(btnEdit);
+    actions.appendChild(btnDel);
+
+    wrap.appendChild(head);
+    wrap.appendChild(actions);
+    elBiblioList.appendChild(wrap);
+  }
+}
+
+function addBook(){
+  const title = document.getElementById("bk-title").value.trim();
+  const author = document.getElementById("bk-author").value.trim();
+  const dueISO = document.getElementById("bk-due").value;
+  const renewMax = clampInt(document.getElementById("bk-renew-max").value, 0, 99, 2);
+  const renewDays = clampInt(document.getElementById("bk-renew-days").value, 0, 365, 21);
+
+  if(!title){
+    toast("Écris au moins un titre.");
+    return;
+  }
+  if(!dueISO
