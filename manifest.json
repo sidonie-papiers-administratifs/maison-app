@@ -1,0 +1,15 @@
+{
+  "name": "Maison : Bibliothèque + Cuisine",
+  "short_name": "Maison",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0c10",
+  "theme_color": "#0b0c10",
+  "icons": [
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAAR0lEQVR42u3PAQ0AAAwCoNm/9HIwYQ0k6d7mGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDgkAAcT2b8oAAAAASUVORK5CYII=",
+      "sizes": "64x64",
+      "type": "image/png"
+    }
+  ]
+}
