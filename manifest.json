@@ -1,0 +1,23 @@
+{
+  "name": "Maison - Bibliothèque & Cuisine",
+  "short_name": "Maison",
+  "start_url": "./?source=pwa",
+  "display": "standalone",
+  "background_color": "#0b0d12",
+  "theme_color": "#0b0d12",
+  "description": "Suivi des livres (rappels J-3/J-1, renouvellements) et gestion de cuisine avec recettes halal maghrébines et méditerranéennes.",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%230b0d12'/%3E%3Cpath d='M56 64h80v12H56z' fill='%237c3aed'/%3E%3Cpath d='M56 86h80v12H56z' fill='%2322c55e'/%3E%3Cpath d='M56 108h52v12H56z' fill='%23eef2ff'/%3E%3Cpath d='M56 130h60v12H56z' fill='%239aa3b2'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%230b0d12'/%3E%3Cpath d='M150 170h212v34H150z' fill='%237c3aed'/%3E%3Cpath d='M150 230h212v34H150z' fill='%2322c55e'/%3E%3Cpath d='M150 290h140v34H150z' fill='%23eef2ff'/%3E%3Cpath d='M150 350h160v34H150z' fill='%239aa3b2'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
